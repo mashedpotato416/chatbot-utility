@@ -52,6 +52,8 @@ def read_googlesheet(wrsheet):
     return df_filled
 
 # Function to extract keywords from data
+# Input 1 is a list with format "[<Desctiption>,[<keyword1>,<keyword2>,...,<keywordnN>]]"
+# Input 2 is a string
 def extract_keywords(excel_data, keyword_selection):
 
     # Initialize output variable
@@ -72,5 +74,5 @@ def extract_keywords(excel_data, keyword_selection):
                         combined_keywords += ', ' + keyword
             break
 
-    # print(combined_keywords)
+    # Copy output to clipboard
     pyperclip.copy(combined_keywords)
