@@ -1,6 +1,7 @@
 from tkinter import *
 from tkinter import ttk, messagebox
 from keywords import read_excel_file, read_googlesheet, extract_keywords
+import tkinter as tk
 
 # Successful Messagebox
 def successful_popup():
@@ -46,7 +47,7 @@ def get_window_size(num_rows, num_column):
 # 7th input is the desired button x and y padding
 def add_button(tk_root, tk_text, btn_cmd, btn_width, txtypad, btn_col, btn_row, xypad):
     # Set button properties
-    btn = Button(tk_root, text = tk_text, command = btn_cmd, anchor='w', justify="left", width=btn_width, pady=txtypad)
+    btn = tk.Button(tk_root, text = tk_text, command = btn_cmd, anchor='w', justify="left", width=btn_width, pady=txtypad)
 
     # Set button position parameters
     btn.grid(column=btn_col, row=btn_row, pady=xypad, padx=xypad)  
