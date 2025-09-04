@@ -8,7 +8,7 @@ keyword_btns = []
 data = []
 
 # Desired number of columns for the app
-number_of_columns = 5
+number_of_columns = 7
 
 # Desired number of rows for top section
 rows_other = 3
@@ -58,7 +58,7 @@ def open_keywords_ui(data_source: str, sheet_name='EDatabase', path='test-file.x
     # 2nd input is the desired number of columns
     def get_window_size(num_rows, num_column):
         xsize = num_column*195
-        ysize = num_rows*48
+        ysize = num_rows*50
         return str(xsize) + 'x' + str(ysize)
 
     # Inner function to Add tkinter checkbox
@@ -157,7 +157,7 @@ def open_keywords_ui(data_source: str, sheet_name='EDatabase', path='test-file.x
     root.title('mp')
 
     # Set tkinter label - top label
-    label_top = tk.Label(text='Chatbot Utility App', font=font_custom)
+    label_top = tk.Label(text='Utility App', font=font_custom)
     label_top.grid(column=0, row=0, pady=30, padx=5, columnspan=number_of_columns, rowspan=2, sticky=N)
 
     # Initialize count variables
@@ -169,7 +169,7 @@ def open_keywords_ui(data_source: str, sheet_name='EDatabase', path='test-file.x
     btn_txt = 'Reduce Priority by 1'
     btn_col = number_of_columns - 1
     min1 = tk.IntVar()
-    btn = tk.Checkbutton(root, text=btn_txt, variable=min1, anchor='w', justify='center', width=button_width, pady=text_padding, command=keyword_update, font=font_checkbtn)
+    btn = tk.Checkbutton(root, text=btn_txt, variable=min1, anchor='w', justify='center', width=15, pady=text_padding, command=keyword_update, font=font_checkbtn)
 
     # Set checkbox position parameters
     btn.grid(column=0, row=2, pady=5, padx=5, columnspan=number_of_columns)
