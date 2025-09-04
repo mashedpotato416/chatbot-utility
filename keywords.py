@@ -36,12 +36,12 @@ def read_googlesheet(wrsheet):
     worksheet = sh.worksheet(wrsheet)
 
     # Get all values from the worksheet
-    data = worksheet.get_all_values()
+    gdata = worksheet.get_all_values()
 
     # Write the data to a CSV file
     with open('datagspread.csv', 'w', newline='') as f:
         writer = csv.writer(f)
-        writer.writerows(data)
+        writer.writerows(gdata)
 
     # Read CSV File
     df = pd.read_csv('datagspread.csv', encoding='windows-1252')
@@ -54,7 +54,7 @@ def read_googlesheet(wrsheet):
 # Function to extract keywords from data
 # Input 1 is a list with format "[<Desctiption>,[<keyword1>,<keyword2>,...,<keywordnN>]]"
 # Input 2 is a string
-def extract_keywords(excel_data, keyword_selection):
+def extract_keywords(excel_data, keyword_selection, minus_one=0):
 
     # Initialize output variable
     combined_keywords = ''
@@ -68,10 +68,18 @@ def extract_keywords(excel_data, keyword_selection):
                 # Exclude zeroes
                 if keyword != 0:
                     # Append to output variable
+                    new_keyword = keyword
+                    # Check if prioritization needs to be reduced
+                    if minus_one == 1:
+                        minus_one_keyword_prio = int(keyword[-1]) - 1
+                        prev_keyword_prio = keyword[-2:]
+                        minus_one_keyword = keyword.replace(prev_keyword_prio, '~'+str(minus_one_keyword_prio))
+                        new_keyword = minus_one_keyword
+                    # Check if this is the first keyword
                     if combined_keywords == '':
-                        combined_keywords = keyword
+                        combined_keywords = new_keyword
                     else:
-                        combined_keywords += ', ' + keyword
+                        combined_keywords += ', ' + new_keyword
             break
 
     # Copy output to clipboard
