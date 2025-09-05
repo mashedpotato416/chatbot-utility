@@ -66,10 +66,11 @@ def open_keywords_ui(data_source: str,
     # Inner function to Get window size
     # 1st input is the desired number of rows
     # 2nd input is the desired number of columns
-    def get_window_size(num_rows, num_column):
-        xsize = num_column*195
-        ysize = num_rows*50
-        return str(xsize) + 'x' + str(ysize)
+    def get_window_size():
+        xsize = number_of_columns*195
+        ysize = rows_total*50
+        output = str(xsize) + 'x' + str(ysize)
+        return output
 
     # Inner function to Add tkinter checkbox
     def add_check_button(tk_root, tk_text, btn_var, btn_value_on, btn_value_off, btn_width, txtypad, btn_col, btn_row, xypad):
@@ -145,7 +146,7 @@ def open_keywords_ui(data_source: str,
     button_width = 25
     button_padding = 5
     text_padding = 5
-    window_size = get_window_size(rows_total, number_of_columns)
+    window_size = get_window_size()
 
     # Create tkinter instance
     root = Tk()
