@@ -9,10 +9,12 @@ import csv
 
 # Function for excel files
 # Data will be in the format "[<Desctiption>,[<keyword1>,<keyword2>,...,<keywordnN>]]"
-def read_excel_file(excel_filepath, sheet_name):
+def read_excel_file(excel_filepath, 
+                        sheet_name):
 
     # Read a specific sheet by name:
-    df = pd.read_excel(excel_filepath, sheet_name)
+    df = pd.read_excel(excel_filepath, 
+                        sheet_name)
 
     # Change NaN to Zero
     df_filled = df.fillna(0)
@@ -39,12 +41,15 @@ def read_googlesheet(wrsheet):
     gdata = worksheet.get_all_values()
 
     # Write the data to a CSV file
-    with open('datagspread.csv', 'w', newline='') as f:
+    with open('datagspread.csv', 
+                    'w', 
+                    newline='') as f:
         writer = csv.writer(f)
         writer.writerows(gdata)
 
     # Read CSV File
-    df = pd.read_csv('datagspread.csv', encoding='windows-1252')
+    df = pd.read_csv('datagspread.csv', 
+                        encoding='windows-1252')
 
     # Change NaN to Zero
     df_filled = df.fillna(0)
@@ -54,7 +59,9 @@ def read_googlesheet(wrsheet):
 # Function to extract keywords from data
 # Input 1 is a list with format "[<Desctiption>,[<keyword1>,<keyword2>,...,<keywordnN>]]"
 # Input 2 is a string
-def extract_keywords(excel_data, keyword_selection, minus_one=0):
+def extract_keywords(excel_data, 
+                        keyword_selection, 
+                        minus_one=0):
 
     # Initialize output variable
     combined_keywords = ''

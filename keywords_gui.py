@@ -16,21 +16,6 @@ rows_other = 3
 # Desired number of rows for bottom section
 rows_bottom = 1
 
-# Successful Messagebox
-def successful_popup(msg):
-    messagebox.showinfo('Successful',msg)
-
-# Wrapper function
-def successful_extract(excel_data, 
-                        keyword_selection, 
-                        minus_one):
-
-    extract_keywords(excel_data, 
-                        keyword_selection, 
-                        minus_one)
-
-    successful_popup('Keywords were copied to the clipboard')
-
 def open_keywords_ui(data_source: str, 
                         sheet_name='EDatabase', 
                         path='test-file.xlsx'):
@@ -42,7 +27,8 @@ def open_keywords_ui(data_source: str,
             output = read_googlesheet(sheet_name)
         else:
             # Retrieve data from excel file
-            output = read_excel_file(path, sheet_name)
+            output = read_excel_file(path, 
+                                        sheet_name)
         return output
 
     # Inner function to Select columns with description in first row
@@ -114,11 +100,28 @@ def open_keywords_ui(data_source: str,
             for description in descriptions:
                 if btn['text'] == description:
                     # Create a function for button
-                    btn_command = lambda description=description: successful_extract(data, description, minus_one)
+                    btn_command = lambda description=description: successful_extract(data, 
+                                                                                        description, 
+                                                                                        minus_one)
                     # Update command
                     btn.config(command=btn_command)
                     # Update tk root
                     root.update_idletasks()
+
+    # Successful Messagebox
+    def successful_popup(msg):
+        messagebox.showinfo('Successful',msg)
+
+    # Successful Extract Prompt
+    def successful_extract(excel_data, 
+                            keyword_selection, 
+                            minus_one):
+
+        extract_keywords(excel_data, 
+                            keyword_selection, 
+                            minus_one)
+
+        successful_popup('Keywords were copied to the clipboard')
 
     # Retrieve data from source
     global data
@@ -153,17 +156,34 @@ def open_keywords_ui(data_source: str,
  
     # Set UI font
     ui_font = 'Helvetica'
-    font_custom = font.Font(family=ui_font, size=30, weight="bold")
-    font_checkbtn = font.Font(family=ui_font, size=12)
-    font_btn = font.Font(family=ui_font, size=9)
-    font_btn2 = font.Font(family=ui_font, size=9, weight="bold")
+    font_custom = font.Font(family=ui_font, 
+                                size=30, 
+                                weight="bold")
+
+    font_checkbtn = font.Font(family=ui_font, 
+                                size=12)
+                                
+    font_btn = font.Font(family=ui_font, 
+                            size=9)
+
+    font_btn2 = font.Font(family=ui_font, 
+                            size=9, 
+                            weight="bold")
 
     # Set tkinter title - window
     root.title('mp')
 
     # Set tkinter label - top label
-    label_top = tk.Label(text='Utility App', font=font_custom)
-    label_top.grid(column=0, row=0, pady=30, padx=5, columnspan=number_of_columns, rowspan=2, sticky=N)
+    label_top = tk.Label(text='Utility App', 
+                            font=font_custom)
+
+    label_top.grid(column=0, 
+                    row=0, 
+                    pady=30, 
+                    padx=5, 
+                    columnspan=number_of_columns, 
+                    rowspan=2, 
+                    sticky=N)
 
     # Initialize count variables
     count_col = 0
@@ -174,10 +194,22 @@ def open_keywords_ui(data_source: str,
     btn_txt = 'Reduce Priority by 1'
     btn_col = number_of_columns - 1
     min1 = tk.IntVar()
-    btn = tk.Checkbutton(root, text=btn_txt, variable=min1, anchor='w', justify='center', width=15, pady=text_padding, command=keyword_update, font=font_checkbtn)
+    btn = tk.Checkbutton(root, 
+                            text=btn_txt, 
+                            variable=min1, 
+                            anchor='w', 
+                            justify='center', 
+                            width=15, 
+                            pady=text_padding, 
+                            command=keyword_update, 
+                            font=font_checkbtn)
 
     # Set checkbox position parameters
-    btn.grid(column=0, row=2, pady=5, padx=5, columnspan=number_of_columns)
+    btn.grid(column=0, 
+                row=2, 
+                pady=5, 
+                padx=5, 
+                columnspan=number_of_columns)
 
     # Add Keyword buttons
     # Iterate thru headers
@@ -187,7 +219,14 @@ def open_keywords_ui(data_source: str,
         btn_command = root.destroy
 
         # Add new buttons per database
-        add_button(root, description, btn_command, button_width, text_padding, count_col, count_row, button_padding)
+        add_button(root, 
+                    description, 
+                    btn_command, 
+                    button_width, 
+                    text_padding, 
+                    count_col, 
+                    count_row, 
+                    button_padding)
 
         # Control number of buttons per column / Distributes buttons
         if count_row == rows_keywords_end:
@@ -204,15 +243,41 @@ def open_keywords_ui(data_source: str,
 
     # Add Refresh Button
     # Set button properties
-    btn = tk.Button(root, text = 'Refresh', command = data_refresh, anchor='w', justify='left', width=button_width, pady=text_padding, font=font_btn2, fg='#fff', bg='#198754')
+    btn = tk.Button(root, 
+                        text = 'Refresh', 
+                        command = data_refresh, 
+                        anchor='w', 
+                        justify='left', 
+                        width=button_width, 
+                        pady=text_padding, 
+                        font=font_btn2, 
+                        fg='#fff', 
+                        bg='#198754')
+
     # Set button position parameters
-    btn.grid(column=number_of_columns-2, row=rows_total, pady=button_padding, padx=button_padding)
+    btn.grid(column=number_of_columns-2, 
+                row=rows_total, 
+                pady=button_padding, 
+                padx=button_padding)
 
     # Add Quit Button
     # Set button properties
-    btn = tk.Button(root, text = 'Quit', command = root.destroy, anchor='w', justify='left', width=button_width, pady=text_padding, font=font_btn2, fg='#fff', bg='#dc3545')
+    btn = tk.Button(root, 
+                        text = 'Quit', 
+                        command = root.destroy, 
+                        anchor='w', 
+                        justify='left', 
+                        width=button_width, 
+                        pady=text_padding, 
+                        font=font_btn2, 
+                        fg='#fff', 
+                        bg='#dc3545')
+
     # Set button position parameters
-    btn.grid(column=number_of_columns-1, row=rows_total, pady=button_padding, padx=button_padding)
+    btn.grid(column=number_of_columns-1, 
+                row=rows_total, 
+                pady=button_padding, 
+                padx=button_padding)
 
     root.mainloop() 
 
