@@ -27,13 +27,13 @@ def successful_extract(excel_data, keyword_selection, minus_one):
 
 def open_keywords_ui(data_source: str, sheet_name='EDatabase', path='test-file.xlsx'):
     # Inner function to Retrieve data from source
-    def get_data_from_source(src, sheet, path):
-        if src == 'google':
+    def get_data_from_source():
+        if data_source == 'google':
             # Retrieve data from google sheets
-            output = read_googlesheet(sheet)
+            output = read_googlesheet(sheet_name)
         else:
             # Retrieve data from excel file
-            output = read_excel_file(path, sheet)
+            output = read_excel_file(path, sheet_name)
         return output
 
     # Inner function to Select columns with description in first row
@@ -97,7 +97,7 @@ def open_keywords_ui(data_source: str, sheet_name='EDatabase', path='test-file.x
     def data_refresh():
         global data
         # Update data
-        data = get_data_from_source(data_source, sheet_name, path)
+        data = get_data_from_source()
         # Update button
         keyword_update()
         successful_popup('Data has been updated')
@@ -117,7 +117,7 @@ def open_keywords_ui(data_source: str, sheet_name='EDatabase', path='test-file.x
 
     # Retrieve data from source
     global data
-    data = get_data_from_source(data_source, sheet_name, path)
+    data = get_data_from_source()
 
     # Declare variable as list
     descriptions = []
