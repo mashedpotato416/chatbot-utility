@@ -39,9 +39,9 @@ def open_keywords_ui(data_source: str, sheet_name='EDatabase', path='test-file.x
     # Inner function to Select columns with description in first row
     # Input is a list with unnamed headers with format [<Header1>,<Header2>,<Header3>,...,<HeaderN>]
     # Output is a list with named headers with format [<Header1>,<Header2>,<Header3>,...,<HeaderN>]
-    def get_data_columns(data_with_unnamed):
+    def get_unnamed_headers():
         output = []
-        for column in data_with_unnamed:
+        for column in data:
             if 'Unnamed' not in column:
                 output.append(column)
         return output
@@ -123,7 +123,7 @@ def open_keywords_ui(data_source: str, sheet_name='EDatabase', path='test-file.x
     descriptions = []
 
     # Retrieve headers (database names) and exclude unnamed ones
-    descriptions = get_data_columns(data)
+    descriptions = get_unnamed_headers()
 
     # Compute number of rows and columns
     rows_keywords = get_keywords_rows(descriptions,number_of_columns)
