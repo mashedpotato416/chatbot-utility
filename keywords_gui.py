@@ -8,7 +8,7 @@ keyword_btns = []
 data = []
 
 # Desired number of columns for the app
-number_of_columns = 6
+number_of_columns = 7
 
 # Desired number of rows for top section
 rows_other = 3
@@ -17,13 +17,13 @@ rows_other = 3
 rows_bottom = 1
 
 # Define Sizes
-button_text_width = 25
+button_text_width = 20
 button_padding = 5
 button_paddingx = 5
 button_paddingy = 5
 grid_paddingx = 10
 grid_paddingy = 5
-col_multx = 213
+col_multx = 180
 col_multy = 50
 
 def open_keywords_ui(data_source: str, 
