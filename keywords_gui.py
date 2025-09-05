@@ -94,9 +94,9 @@ def open_keywords_ui(data_source: str,
     # Inner function for keyword button update
     def keyword_update():
         if min1.get() == 1:
-            update_keyword_button_command(root, data, descriptions, 1)
+            update_keyword_button_command(1)
         else:
-            update_keyword_button_command(root, data, descriptions, 0)
+            update_keyword_button_command(0)
     
     # Inner function for data refresh
     def data_refresh():
@@ -108,17 +108,17 @@ def open_keywords_ui(data_source: str,
         successful_popup('Data has been updated')
     
     # Inner function update keyword button
-    def update_keyword_button_command(tk_root, data, descriptions, min1):
+    def update_keyword_button_command(minus_one):
 
         for btn in keyword_btns:
             for description in descriptions:
                 if btn['text'] == description:
-                    # Create a function for each button
-                    btn_command = lambda description=description: successful_extract(data, description, min1)
+                    # Create a function for button
+                    btn_command = lambda description=description: successful_extract(data, description, minus_one)
                     # Update command
                     btn.config(command=btn_command)
                     # Update tk root
-                    tk_root.update_idletasks()
+                    root.update_idletasks()
 
     # Retrieve data from source
     global data
@@ -200,7 +200,7 @@ def open_keywords_ui(data_source: str,
             count_row += 1
 
     # Update button commands
-    update_keyword_button_command(root, data, descriptions, min1)
+    keyword_update()
 
     # Add Refresh Button
     # Set button properties
