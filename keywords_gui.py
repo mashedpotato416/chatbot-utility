@@ -8,13 +8,23 @@ keyword_btns = []
 data = []
 
 # Desired number of columns for the app
-number_of_columns = 7
+number_of_columns = 6
 
 # Desired number of rows for top section
 rows_other = 3
 
 # Desired number of rows for bottom section
 rows_bottom = 1
+
+# Define Sizes
+button_text_width = 25
+button_padding = 5
+button_paddingx = 5
+button_paddingy = 5
+grid_paddingx = 10
+grid_paddingy = 5
+col_multx = 213
+col_multy = 50
 
 def open_keywords_ui(data_source: str, 
                         sheet_name='EDatabase', 
@@ -47,33 +57,56 @@ def open_keywords_ui(data_source: str,
 
     # Inner function to Get window size
     def get_window_size():
-        xsize = number_of_columns*195
-        ysize = rows_total*50
+        xsize = number_of_columns*col_multx
+        ysize = rows_total*col_multy
         output = str(xsize) + 'x' + str(ysize)
+        print(output)
         return output
 
     # Inner function to Add tkinter checkbox
     def add_check_button(tk_root, tk_text, btn_var, btn_value_on, btn_value_off, btn_width, txtypad, btn_col, btn_row, xypad):
         # Set button properties
-        btn = tk.Checkbutton(tk_root, text = tk_text, variable = btn_var, onvalue = btn_value_on, offvalue = btn_value_off, anchor='w', justify='left', width=btn_width, pady=txtypad)
+        btn = tk.Checkbutton(tk_root, text = tk_text, variable = btn_var, onvalue = btn_value_on, offvalue = btn_value_off, anchor='w', justify='left', bd=btn_width, pady=txtypad)
 
         # Set button position parameters
         btn.grid(column=btn_col, row=btn_row, pady=xypad, padx=xypad)
+
     # Inner function to add tkinter button
-    # 1st input is the tk object
-    # 2nd input is the desired text
-    # 3rd input is the desired command
-    # 4th input is the desired text padding
-    # 5th input is the desired column position
-    # 6th input is the desired row position
-    # 7th input is the desired button x and y padding
-    def add_button(tk_root, tk_text, btn_cmd, btn_width, txtypad, btn_col, btn_row, xypad):
+    def add_button(tk_text, 
+                    btn_cmd,
+                    grid_col, 
+                    grid_row,  
+                    btn_width, 
+                    btn_padx, 
+                    btn_pady, 
+                    btn_font, 
+                    btn_bg, 
+                    btn_fg, 
+                    grid_padx, 
+                    grid_pady, 
+                    grid_sticky):
+
         # Set button properties
-        btn = tk.Button(tk_root, text = tk_text, command = btn_cmd, anchor='w', justify='left', width=btn_width, pady=txtypad, font=font_btn, bg='#d3d4d5', fg='#000')
+        btn = tk.Button(root, 
+                        text = tk_text, 
+                        command = btn_cmd, 
+                        anchor = 'w', 
+                        justify = 'left', 
+                        width = btn_width, 
+                        padx = btn_padx, 
+                        pady = btn_pady, 
+                        font = btn_font, 
+                        bg = btn_bg, 
+                        fg = btn_fg)
 
         # Set button position parameters
-        btn.grid(column=btn_col, row=btn_row, pady=xypad, padx=xypad)
+        btn.grid(column=grid_col, 
+                    row=grid_row, 
+                    padx=grid_padx, 
+                    pady=grid_pady, 
+                    sticky=grid_sticky)
 
+        # Append to list of buttons
         global keyword_btns
         keyword_btns.append(btn)
 
@@ -139,10 +172,7 @@ def open_keywords_ui(data_source: str,
     rows_keywords_end = rows_keywords + rows_other
     rows_total = rows_keywords + rows_other + rows_bottom
 
-    # Compute/Define size of UI
-    button_width = 25
-    button_padding = 5
-    text_padding = 5
+    # Compute size of UI
     window_size = get_window_size()
 
     # Create tkinter instance
@@ -150,9 +180,6 @@ def open_keywords_ui(data_source: str,
 
     # Set the UI Size         
     root.geometry(window_size)   
-
-    # Set the UI background
-    # root.configure(bg='#f7f7f7')
  
     # Set UI font
     ui_font = 'Helvetica'
@@ -169,6 +196,17 @@ def open_keywords_ui(data_source: str,
     font_btn2 = font.Font(family=ui_font, 
                             size=9, 
                             weight="bold")
+    
+    # Set Button Color
+    # Keyword Buttons
+    btn_bg_color = '#d3d4d5'
+    btn_fg_color = '#000'
+    # Refresh Button
+    btn2_bg_color = '#198754'
+    btn2_fg_color = '#fff'
+    # Quit Button
+    btn3_bg_color = '#dc3545'
+    btn3_fg_color = '#fff'
 
     # Set tkinter title - window
     root.title('mp')
@@ -200,7 +238,7 @@ def open_keywords_ui(data_source: str,
                             anchor='w', 
                             justify='center', 
                             width=15, 
-                            pady=text_padding, 
+                            pady=button_paddingy, 
                             command=keyword_update, 
                             font=font_checkbtn)
 
@@ -218,15 +256,20 @@ def open_keywords_ui(data_source: str,
         # Temporary command
         btn_command = root.destroy
 
-        # Add new buttons per database
-        add_button(root, 
-                    description, 
-                    btn_command, 
-                    button_width, 
-                    text_padding, 
-                    count_col, 
-                    count_row, 
-                    button_padding)
+        # Add new buttons per keyword database
+        add_button(tk_text = description, 
+                    btn_cmd = btn_command, 
+                    btn_width = button_text_width, 
+                    btn_padx = button_paddingx, 
+                    btn_pady = button_paddingy, 
+                    btn_font = font_btn, 
+                    btn_bg = btn_bg_color, 
+                    btn_fg = btn_fg_color, 
+                    grid_padx = grid_paddingx, 
+                    grid_pady = grid_paddingy,
+                    grid_col = count_col, 
+                    grid_row = count_row,
+                    grid_sticky = N)
 
         # Control number of buttons per column / Distributes buttons
         if count_row == rows_keywords_end:
@@ -242,42 +285,36 @@ def open_keywords_ui(data_source: str,
     keyword_update()
 
     # Add Refresh Button
-    # Set button properties
-    btn = tk.Button(root, 
-                        text = 'Refresh', 
-                        command = data_refresh, 
-                        anchor='w', 
-                        justify='left', 
-                        width=button_width, 
-                        pady=text_padding, 
-                        font=font_btn2, 
-                        fg='#fff', 
-                        bg='#198754')
 
-    # Set button position parameters
-    btn.grid(column=number_of_columns-2, 
-                row=rows_total, 
-                pady=button_padding, 
-                padx=button_padding)
+    add_button(tk_text = 'Refresh', 
+                    btn_cmd = data_refresh, 
+                    btn_width = button_text_width, 
+                    btn_padx = button_paddingx, 
+                    btn_pady = button_paddingy, 
+                    btn_font = font_btn, 
+                    btn_bg = btn2_bg_color, 
+                    btn_fg = btn2_fg_color, 
+                    grid_padx = grid_paddingx, 
+                    grid_pady = grid_paddingy,
+                    grid_col = number_of_columns-2, 
+                    grid_row = rows_total,
+                    grid_sticky = N)
 
     # Add Quit Button
-    # Set button properties
-    btn = tk.Button(root, 
-                        text = 'Quit', 
-                        command = root.destroy, 
-                        anchor='w', 
-                        justify='left', 
-                        width=button_width, 
-                        pady=text_padding, 
-                        font=font_btn2, 
-                        fg='#fff', 
-                        bg='#dc3545')
 
-    # Set button position parameters
-    btn.grid(column=number_of_columns-1, 
-                row=rows_total, 
-                pady=button_padding, 
-                padx=button_padding)
+    add_button(tk_text = 'Quit', 
+                    btn_cmd = root.destroy, 
+                    btn_width = button_text_width, 
+                    btn_padx = button_paddingx, 
+                    btn_pady = button_paddingy, 
+                    btn_font = font_btn2, 
+                    btn_bg = btn3_bg_color, 
+                    btn_fg = btn3_fg_color, 
+                    grid_padx = grid_paddingx, 
+                    grid_pady = grid_paddingy,
+                    grid_col = number_of_columns-1, 
+                    grid_row = rows_total,
+                    grid_sticky = N)
 
     root.mainloop() 
 
