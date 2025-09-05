@@ -21,11 +21,20 @@ def successful_popup(msg):
     messagebox.showinfo('Successful',msg)
 
 # Wrapper function
-def successful_extract(excel_data, keyword_selection, minus_one):
-    extract_keywords(excel_data, keyword_selection, minus_one)
+def successful_extract(excel_data, 
+                        keyword_selection, 
+                        minus_one):
+
+    extract_keywords(excel_data, 
+                        keyword_selection, 
+                        minus_one)
+
     successful_popup('Keywords were copied to the clipboard')
 
-def open_keywords_ui(data_source: str, sheet_name='EDatabase', path='test-file.xlsx'):
+def open_keywords_ui(data_source: str, 
+                        sheet_name='EDatabase', 
+                        path='test-file.xlsx'):
+
     # Inner function to Retrieve data from source
     def get_data_from_source():
         if data_source == 'google':
@@ -49,9 +58,10 @@ def open_keywords_ui(data_source: str, sheet_name='EDatabase', path='test-file.x
     # Inner function to Get number of rows
     # 1st Input is a list without unnamed headers with format [<Header1>,<Header2>,<Header3>,...,<HeaderN>]
     # 2nd input is the desired number of column
-    def get_keywords_rows(list_label_and_keywords, num_column):
-        count = len(list_label_and_keywords)
-        return int(count/num_column)
+    def get_keywords_rows():
+        count = len(descriptions)
+        output = int(count/number_of_columns)
+        return output
 
     # Inner function to Get window size
     # 1st input is the desired number of rows
@@ -126,7 +136,7 @@ def open_keywords_ui(data_source: str, sheet_name='EDatabase', path='test-file.x
     descriptions = get_unnamed_headers()
 
     # Compute number of rows and columns
-    rows_keywords = get_keywords_rows(descriptions,number_of_columns)
+    rows_keywords = get_keywords_rows()
     rows_keywords_start = rows_other
     rows_keywords_end = rows_keywords + rows_other
     rows_total = rows_keywords + rows_other + rows_bottom
