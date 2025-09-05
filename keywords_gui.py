@@ -46,8 +46,6 @@ def open_keywords_ui(data_source: str,
         return output
 
     # Inner function to Select columns with description in first row
-    # Input is a list with unnamed headers with format [<Header1>,<Header2>,<Header3>,...,<HeaderN>]
-    # Output is a list with named headers with format [<Header1>,<Header2>,<Header3>,...,<HeaderN>]
     def get_unnamed_headers():
         output = []
         for column in data:
@@ -56,16 +54,12 @@ def open_keywords_ui(data_source: str,
         return output
 
     # Inner function to Get number of rows
-    # 1st Input is a list without unnamed headers with format [<Header1>,<Header2>,<Header3>,...,<HeaderN>]
-    # 2nd input is the desired number of column
     def get_keywords_rows():
         count = len(descriptions)
         output = int(count/number_of_columns)
         return output
 
     # Inner function to Get window size
-    # 1st input is the desired number of rows
-    # 2nd input is the desired number of columns
     def get_window_size():
         xsize = number_of_columns*195
         ysize = rows_total*50
