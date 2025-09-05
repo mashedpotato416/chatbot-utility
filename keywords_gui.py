@@ -60,7 +60,6 @@ def open_keywords_ui(data_source: str,
         xsize = number_of_columns*col_multx
         ysize = rows_total*col_multy
         output = str(xsize) + 'x' + str(ysize)
-        print(output)
         return output
 
     # Inner function to Add tkinter checkbox
