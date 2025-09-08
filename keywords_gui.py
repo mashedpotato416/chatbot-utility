@@ -167,14 +167,16 @@ def open_keywords_ui(data_source: str,
                             keyword_selection, 
                             minus_one)
 
+        # Check if data will be copied directly to the browser
         if paste_browser == 1:
             # Minimize tkinter 
             root.iconify()
             # Set a timer delay
             time.sleep(0.25)
-            # Locate and click 
+            # Execute script
             command1()
 
+        # Successful prompt
         successful_popup('Keywords were copied to the clipboard')
 
     # Retrieve data from source
