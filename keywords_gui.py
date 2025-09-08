@@ -113,10 +113,19 @@ def open_keywords_ui(data_source: str,
 
     # Inner function for keyword button update
     def keyword_update():
+
         if min1.get() == 1:
-            update_keyword_button_command(1)
+            min1_value = 1
         else:
-            update_keyword_button_command(0)
+            min1_value = 0
+
+        if paste_browser.get() == 1:
+            paste_browser_value = 1
+        else:
+            paste_browser_value = 0
+
+        update_keyword_button_command(min1_value, paste_browser_value)
+        
     
     # Inner function for data refresh
     def data_refresh():
@@ -128,7 +137,7 @@ def open_keywords_ui(data_source: str,
         successful_popup('Data has been updated')
     
     # Inner function update keyword button
-    def update_keyword_button_command(minus_one):
+    def update_keyword_button_command(minus_one, paste_browser):
 
         for btn in keyword_btns:
             for description in descriptions:
@@ -136,7 +145,8 @@ def open_keywords_ui(data_source: str,
                     # Create a function for button
                     btn_command = lambda description=description: successful_extract(data, 
                                                                                         description, 
-                                                                                        minus_one)
+                                                                                        minus_one,
+                                                                                        paste_browser)
                     # Update command
                     btn.config(command=btn_command)
                     # Update tk root
@@ -149,23 +159,23 @@ def open_keywords_ui(data_source: str,
     # Successful Extract Prompt
     def successful_extract(excel_data, 
                             keyword_selection, 
-                            minus_one):
+                            minus_one,
+                            paste_browser):
 
         # Copy keywords to clipboard
         extract_keywords(excel_data, 
                             keyword_selection, 
                             minus_one)
 
-        # Minimize tkinter 
-        root.iconify()
+        if paste_browser == 1:
+            # Minimize tkinter 
+            root.iconify()
+            # Set a timer delay
+            time.sleep(0.25)
+            # Locate and click 
+            command1()
 
-        # Set a timer delay
-        time.sleep(0.25)
-
-        # Locate and click 
-        command1()
-
-        # successful_popup('Keywords were copied to the clipboard')
+        successful_popup('Keywords were copied to the clipboard')
 
     # Retrieve data from source
     global data
@@ -241,7 +251,7 @@ def open_keywords_ui(data_source: str,
     # Add checkbox Button
     # Set checkbox properties
     btn_txt = 'Reduce Priority by 1'
-    btn_col = number_of_columns - 1
+    btn_col = 1
     min1 = tk.IntVar()
     btn = tk.Checkbutton(root, 
                             text=btn_txt, 
@@ -254,11 +264,33 @@ def open_keywords_ui(data_source: str,
                             font=font_checkbtn)
 
     # Set checkbox position parameters
-    btn.grid(column=0, 
+    btn.grid(column=btn_col, 
                 row=2, 
                 pady=5, 
                 padx=5, 
-                columnspan=number_of_columns)
+                columnspan=3)
+    
+    # Add checkbox Button
+    # Set checkbox properties
+    btn_txt2 = 'Paste on browser'
+    btn_col2 = 3
+    paste_browser = tk.IntVar()
+    btn = tk.Checkbutton(root, 
+                            text=btn_txt2, 
+                            variable=paste_browser, 
+                            anchor='w', 
+                            justify='center', 
+                            width=15, 
+                            pady=button_paddingy, 
+                            command=keyword_update, 
+                            font=font_checkbtn)
+
+    # Set checkbox position parameters
+    btn.grid(column=btn_col2, 
+                row=2, 
+                pady=5, 
+                padx=5, 
+                columnspan=3)
 
     # Add Keyword buttons
     # Iterate thru headers
