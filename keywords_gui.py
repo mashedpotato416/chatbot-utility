@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import ttk, messagebox, font
 from keywords import read_excel_file, read_googlesheet, extract_keywords
+from keywords_aivobot import command1
+import time
 import tkinter as tk
 
 # Global Variables
@@ -149,11 +151,21 @@ def open_keywords_ui(data_source: str,
                             keyword_selection, 
                             minus_one):
 
+        # Copy keywords to clipboard
         extract_keywords(excel_data, 
                             keyword_selection, 
                             minus_one)
 
-        successful_popup('Keywords were copied to the clipboard')
+        # Minimize tkinter 
+        root.iconify()
+
+        # Set a timer delay
+        time.sleep(0.25)
+
+        # Locate and click 
+        command1()
+
+        # successful_popup('Keywords were copied to the clipboard')
 
     # Retrieve data from source
     global data

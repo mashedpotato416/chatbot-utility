@@ -23,5 +23,7 @@ How to Use:
         -pip install pyperclip
         -pip install gspread
         -pip install python-dotenv
+        -pip install pyautogui
+        -pip install --upgrade Pillow
         
 
