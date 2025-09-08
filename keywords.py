@@ -2,7 +2,6 @@ from gspread.utils import GridRangeType
 from dotenv import load_dotenv
 import os
 import pandas as pd
-import pyperclip
 import math
 import gspread
 import csv
@@ -88,6 +87,7 @@ def extract_keywords(excel_data,
                     else:
                         combined_keywords += ', ' + new_keyword
             break
-
+    
+    print('Number of keywords:', len(combined_keywords.split(', ')))
     # Copy output to clipboard
-    pyperclip.copy(combined_keywords)
+    return combined_keywords

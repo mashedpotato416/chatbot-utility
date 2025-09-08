@@ -1,7 +1,8 @@
 from tkinter import *
 from tkinter import ttk, messagebox, font
 from keywords import read_excel_file, read_googlesheet, extract_keywords
-from keywords_aivobot import command1
+from keywords_aivobot import command_popup, command_browser
+import pyperclip
 import time
 import tkinter as tk
 
@@ -163,9 +164,9 @@ def open_keywords_ui(data_source: str,
                             paste_browser):
 
         # Copy keywords to clipboard
-        extract_keywords(excel_data, 
-                            keyword_selection, 
-                            minus_one)
+        combined_keywords = extract_keywords(excel_data, 
+                                                keyword_selection, 
+                                                minus_one)
 
         # Check if data will be copied directly to the browser
         if paste_browser == 1:
@@ -173,11 +174,19 @@ def open_keywords_ui(data_source: str,
             root.iconify()
             # Set a timer delay
             time.sleep(0.25)
-            # Execute script
-            command1()
+            # Find the correct database
+            command_browser(keyword_selection, combined_keywords)
+            # Set a timer delay
+            time.sleep(0.25)
+            # Successful
+            successful_popup('Done')
+        
+        else:
+            # Copy keywords to clipboard
+            pyperclip.copy(combined_keywords)
+            # Successful
+            successful_popup('Keywords are now in your clipboard')
 
-        # Successful prompt
-        successful_popup('Keywords were copied to the clipboard')
 
     # Retrieve data from source
     global data
