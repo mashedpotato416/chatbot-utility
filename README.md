@@ -25,5 +25,6 @@ How to Use:
         -pip install python-dotenv
         -pip install pyautogui
         -pip install --upgrade Pillow
+        -pip3 install opencv-python
         
 
