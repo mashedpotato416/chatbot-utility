@@ -177,6 +177,7 @@ def open_keywords_ui(data_source: str,
             # Find the correct database
             asyncio.run(command_browser(keyword_selection, combined_keywords, minus_one))
             # Successful
+            root.deiconify()
             successful_popup('Done')
         else:
             # Copy keywords to clipboard
