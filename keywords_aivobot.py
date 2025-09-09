@@ -63,17 +63,21 @@ async def locate_and_click_75(path):
     pyautogui.moveTo(await img_location_75(path))
     pyautogui.click()
 
-def scroll_down():
+async def scroll_down():
     pyautogui.scroll(-10000)
+    # Wait a bit
+    time.sleep(0.25)
 
-def scroll_up():
+async def scroll_up():
     pyautogui.scroll(10000)
+    # Wait a bit
+    time.sleep(0.25)
 
 async def command_popup():
     # Click on popup window
     await locate_and_click(loc_keyword_txt)
     # Scroll down
-    scroll_down()
+    await scroll_down()
     # Click delete keywords button
     await locate_and_click(loc_delete_btn)
     # Click keywords text field
@@ -83,7 +87,7 @@ async def command_popup():
     # Press enter
     pyautogui.press("enter")
     # Scroll up
-    scroll_up()
+    await scroll_up()
     # Save changes
     await locate_and_click(loc_save_btn)
 
@@ -93,13 +97,17 @@ async def command_browser(keyword, combined_keywords):
     # Click on browser
     await locate_and_click(loc_scroll_main)
     # Scroll up - This will make sure that loc_header will be searchable
-    scroll_up()
+    await scroll_up()
     # Locate start and end of keyword database name
     loc_header_start_end = await img_location_start_and_end(loc_header)
+    # Click on browser
+    await locate_and_click(loc_header)
     # Control + F
     pyautogui.hotkey('ctrl', 'f')
     # Type search keyword
-    pyautogui.write(keyword[3:])
+    pyautogui.write(get_text_index(keyword)+'.')
+    # Wait a bit
+    time.sleep(0.25)
     # Close google search
     await locate_and_click_75(loc_google_search_btns)
     # Locate all edit buttons
