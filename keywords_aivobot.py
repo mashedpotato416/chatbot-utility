@@ -55,12 +55,24 @@ async def img_location_75(path):
     output = [loc_x, loc_y]
     return output
 
+# Get position below the image
+async def img_location_down(path):
+    loc = pyautogui.locateOnScreen(path, confidence=img_conf)
+    loc_x = loc[0]+((loc[2]/2))
+    loc_y = loc[1]+(loc[3]/2)+100
+    output = [loc_x, loc_y]
+    return output
+
 async def locate_and_click(path):
     pyautogui.moveTo(await img_location_center(path))
     pyautogui.click()
 
 async def locate_and_click_75(path):
     pyautogui.moveTo(await img_location_75(path))
+    pyautogui.click()
+
+async def locate_and_click_down(path):
+    pyautogui.moveTo(await img_location_down(path))
     pyautogui.click()
 
 async def scroll_down():
@@ -75,7 +87,7 @@ async def scroll_up():
 
 async def command_popup():
     # Click on popup window
-    await locate_and_click(loc_keyword_txt)
+    await locate_and_click_down(loc_keyword_txt)
     # Scroll down
     await scroll_down()
     # Click delete keywords button
