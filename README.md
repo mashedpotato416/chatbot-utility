@@ -1,30 +1,32 @@
 # chatbot-utility
 Utility program to help employees support chatbot application
 
-How to Use:
+Requirements prior to use:
 
-1. Install python:
-    https://www.python.org/downloads/
+1. Install python: https://www.python.org/downloads/
 
     To confirm (Windows):
-        - Open Command Prompt
-        - Enter "python --version"
+    <br>- Open Command Prompt
+    <br>- Enter "python --version"
 
-2. Install dependencies:
+2. Install libaries:
 
-    pandas
-    pyperclip
-    gspread
-    dotenv
+    <br>pandas
+    <br>pyperclip
+    <br>gspread
+    <br>dotenv
+    <br>pyautogui
+    <br>pillow
+    <br>opencv
 
     To install (Windows):
-        -Open Command Prompt
-        -pip install pandas openpyxl
-        -pip install pyperclip
-        -pip install gspread
-        -pip install python-dotenv
-        -pip install pyautogui
-        -pip install --upgrade Pillow
-        -pip3 install opencv-python
+    <br>-Open Command Prompt
+    <br>-pip install pandas openpyxl
+    <br>-pip install pyperclip
+    <br>-pip install gspread
+    <br>-pip install python-dotenv
+    <br>-pip install pyautogui
+    <br>-pip install Pillow
+    <br>-pip install opencv-python
         
 
