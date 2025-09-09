@@ -22,6 +22,14 @@ def locate_center(x,y,w,h):
     output = [loc_x, loc_y]
     return output
 
+# Retrieve index from text
+def get_text_index(text):
+    # Locate dot location
+    loc_dot = text.find('.')
+    # Get index using dot
+    output = text[:loc_dot]
+    return output
+
 # Get image start location
 async def img_location_start_and_end(path):
     loc = pyautogui.locateOnScreen(path, confidence=img_conf)
@@ -108,7 +116,7 @@ async def command_browser(keyword, combined_keywords):
         # Save to variable
         description_text = pyperclip.paste()
         # Check if text is matching with keyword
-        if description_text[:len_keyword] == keyword:
+        if get_text_index(description_text) == get_text_index(keyword):
             # Click on edit button
             pyautogui.moveTo(loc_center)
             pyautogui.click()
