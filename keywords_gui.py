@@ -175,7 +175,7 @@ def open_keywords_ui(data_source: str,
             root.iconify()
             time.sleep(0.5)
             # Find the correct database
-            asyncio.run(command_browser(keyword_selection, combined_keywords))
+            asyncio.run(command_browser(keyword_selection, combined_keywords, minus_one))
             # Successful
             successful_popup('Done')
         else:

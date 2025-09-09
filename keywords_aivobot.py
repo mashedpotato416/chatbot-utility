@@ -91,9 +91,14 @@ async def command_popup():
     # Save changes
     await locate_and_click(loc_save_btn)
 
-async def command_browser(keyword, combined_keywords):
+async def command_browser(keyword, combined_keywords, minus_one):
     # Get keyword length
     len_keyword = len(keyword)
+    # Get correct index to check - add B if minus one is checked
+    if minus_one == 1:
+        keyword_index = get_text_index(keyword) + 'B'
+    else:
+        keyword_index = get_text_index(keyword)
     # Click on browser
     await locate_and_click(loc_scroll_main)
     # Scroll up - This will make sure that loc_header will be searchable
@@ -105,7 +110,7 @@ async def command_browser(keyword, combined_keywords):
     # Control + F
     pyautogui.hotkey('ctrl', 'f')
     # Type search keyword
-    pyautogui.write(get_text_index(keyword)+'.')
+    pyautogui.write(keyword_index+'.')
     # Wait a bit
     time.sleep(0.25)
     # Close google search
@@ -123,8 +128,8 @@ async def command_browser(keyword, combined_keywords):
         pyautogui.hotkey('ctrl', 'c')
         # Save to variable
         description_text = pyperclip.paste()
-        # Check if text is matching with keyword
-        if get_text_index(description_text) == get_text_index(keyword):
+        # Check if desc index is matching with keyword index
+        if get_text_index(description_text) == keyword_index:
             # Click on edit button
             pyautogui.moveTo(loc_center)
             pyautogui.click()
