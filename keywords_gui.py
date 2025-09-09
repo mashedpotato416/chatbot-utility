@@ -212,12 +212,16 @@ def open_keywords_ui(data_source: str,
  
     # Set UI font
     ui_font = 'Helvetica'
-    font_custom = font.Font(family=ui_font, 
+    font_header = font.Font(family=ui_font, 
                                 size=30, 
                                 weight="bold")
 
+    font_header2 = font.Font(family=ui_font, 
+                                size=10, 
+                                weight="bold")
+
     font_checkbtn = font.Font(family=ui_font, 
-                                size=12)
+                                size=10)
                                 
     font_btn = font.Font(family=ui_font, 
                             size=9)
@@ -242,14 +246,27 @@ def open_keywords_ui(data_source: str,
 
     # Set tkinter label - top label
     label_top = tk.Label(text='Utility App', 
-                            font=font_custom)
+                            font=font_header)
 
     label_top.grid(column=0, 
                     row=0, 
-                    pady=30, 
+                    pady=5, 
                     padx=5, 
                     columnspan=number_of_columns, 
-                    rowspan=2, 
+                    rowspan=1, 
+                    sticky=N)
+
+    # Set tkinter label - reminders
+    label_top = tk.Label(text='Reminder: Make sure knowledge base window is open in your browser', 
+                            font=font_header2,
+                            fg='#FF0000')
+
+    label_top.grid(column=0, 
+                    row=1, 
+                    pady=5, 
+                    padx=5, 
+                    columnspan=number_of_columns, 
+                    rowspan=1, 
                     sticky=N)
 
     # Initialize count variables
