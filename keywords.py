@@ -89,5 +89,6 @@ def extract_keywords(excel_data,
             break
     
     print('Number of keywords:', len(combined_keywords.split(', ')))
+    print('Selection:', keyword_selection)
     # Copy output to clipboard
     return combined_keywords

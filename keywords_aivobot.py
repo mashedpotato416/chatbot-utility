@@ -1,6 +1,7 @@
 import pyautogui, sys
 import time
 import pyperclip
+import asyncio
 
 time_delay = 0.25
 img_conf = 0.8
@@ -23,7 +24,7 @@ def locate_center(x,y,w,h):
     return output
 
 # Get image start location
-def img_location_start_and_end(path):
+async def img_location_start_and_end(path):
     loc = pyautogui.locateOnScreen(path, confidence=img_conf)
     loc_start = int(loc[0])
     loc_end = int(loc[0]) + int(loc[2])
@@ -31,7 +32,7 @@ def img_location_start_and_end(path):
     return output
 
 # Get image center location
-def img_location_center(path):
+async def img_location_center(path):
     loc = pyautogui.locateOnScreen(path, confidence=img_conf)
     output = locate_center(loc[0], 
                             loc[1], 
@@ -40,19 +41,19 @@ def img_location_center(path):
     return output
 
 # Get image 2/3 width location
-def img_location_75(path):
+async def img_location_75(path):
     loc = pyautogui.locateOnScreen(path, confidence=img_conf)
     loc_x = loc[0]+((loc[2]/4)*3)
     loc_y = loc[1]+(loc[3]/2)
     output = [loc_x, loc_y]
     return output
 
-def locate_and_click(path):
-    pyautogui.moveTo(img_location_center(path))
+async def locate_and_click(path):
+    pyautogui.moveTo(await img_location_center(path))
     pyautogui.click()
 
-def locate_and_click_75(path):
-    pyautogui.moveTo(img_location_75(path))
+async def locate_and_click_75(path):
+    pyautogui.moveTo(await img_location_75(path))
     pyautogui.click()
 
 def scroll_down():
@@ -61,47 +62,39 @@ def scroll_down():
 def scroll_up():
     pyautogui.scroll(10000)
 
-def command_popup():
+async def command_popup():
     # Click on popup window
-    locate_and_click(loc_keyword_txt)
-    time.sleep(time_delay)
+    await locate_and_click(loc_keyword_txt)
     # Scroll down
     scroll_down()
-    time.sleep(time_delay)
     # Click delete keywords button
-    locate_and_click(loc_delete_btn)
-    time.sleep(time_delay)
+    await locate_and_click(loc_delete_btn)
     # Click keywords text field
-    locate_and_click(loc_keyword_txtbox)
-    time.sleep(time_delay)
+    await locate_and_click(loc_keyword_txtbox)
     # Paste keywords
     pyautogui.hotkey('ctrl', 'v')
-    time.sleep(time_delay)
     # Press enter
     pyautogui.press("enter")
-    time.sleep(time_delay)
     # Scroll up
     scroll_up()
     # Save changes
-    locate_and_click(loc_save_btn)
+    await locate_and_click(loc_save_btn)
 
-def command_browser(keyword, combined_keywords):
+async def command_browser(keyword, combined_keywords):
     # Get keyword length
     len_keyword = len(keyword)
     # Click on browser
-    locate_and_click(loc_scroll_main)
-    # Scroll up
+    await locate_and_click(loc_scroll_main)
+    # Scroll up - This will make sure that loc_header will be searchable
     scroll_up()
     # Locate start and end of keyword database name
-    loc_header_start_end = img_location_start_and_end(loc_header)
+    loc_header_start_end = await img_location_start_and_end(loc_header)
     # Control + F
     pyautogui.hotkey('ctrl', 'f')
-    time.sleep(time_delay)
     # Type search keyword
     pyautogui.write(keyword[3:])
-    time.sleep(time_delay)
     # Close google search
-    locate_and_click_75(loc_google_search_btns)
+    await locate_and_click_75(loc_google_search_btns)
     # Locate all edit buttons
     loc_pencil = pyautogui.locateAllOnScreen(loc_pencil_btns, confidence=img_conf2)
 
@@ -110,11 +103,12 @@ def command_browser(keyword, combined_keywords):
         # Move to start of row
         pyautogui.moveTo(loc_header_start_end[0], loc_center[1])
         # Drag until end of text
-        pyautogui.dragTo(loc_header_start_end[1], loc_center[1], duration=time_delay)
+        pyautogui.dragTo(loc_header_start_end[1], loc_center[1], duration=0.2)
         # Copy
         pyautogui.hotkey('ctrl', 'c')
         # Save to variable
         description_text = pyperclip.paste()
+        # Check if text is matching with keyword
         if description_text[:len_keyword] == keyword:
             # Click on edit button
             pyautogui.moveTo(loc_center)
@@ -122,7 +116,5 @@ def command_browser(keyword, combined_keywords):
             # Copy keywords to clipboard
             pyperclip.copy(combined_keywords)
             # Paste keywords
-            command_popup()
+            await command_popup()
             break
-
-

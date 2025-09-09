@@ -5,6 +5,7 @@ from keywords_aivobot import command_popup, command_browser
 import pyperclip
 import time
 import tkinter as tk
+import asyncio
 
 # Global Variables
 keyword_btns = []
@@ -172,15 +173,11 @@ def open_keywords_ui(data_source: str,
         if paste_browser == 1:
             # Minimize tkinter 
             root.iconify()
-            # Set a timer delay
-            time.sleep(0.25)
+            time.sleep(0.5)
             # Find the correct database
-            command_browser(keyword_selection, combined_keywords)
-            # Set a timer delay
-            time.sleep(0.25)
+            asyncio.run(command_browser(keyword_selection, combined_keywords))
             # Successful
             successful_popup('Done')
-        
         else:
             # Copy keywords to clipboard
             pyperclip.copy(combined_keywords)
