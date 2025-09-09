@@ -3,7 +3,6 @@ import time
 import pyperclip
 import asyncio
 
-time_delay = 0.25
 img_conf = 0.8
 img_conf2 = 0.9
 loc_keyword_txtbox = './screenshots/screenshot1.png'
